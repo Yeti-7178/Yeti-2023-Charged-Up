@@ -14,11 +14,7 @@ package frc.robot;
  */
 public final class Constants 
 {
-  boolean val;
-  Boolean bool = Boolean.valueOf(val);
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-  }
+
   public static final class ChassisConstants
   {
     public static final int kLeftFrontPort = 2;
@@ -33,7 +29,7 @@ public final class Constants
     
   }
   public static final class OIConstants{
-    public static final int controller1 = 1;
+    public static final int controller1 = 0;
     public static final int controller2 = 2;
   }
 

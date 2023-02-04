@@ -16,10 +16,7 @@ import frc.robot.Constants.ChassisConstants;
 import frc.robot.Constants.OIConstants;
 
 import frc.robot.commands.drive.DefaultDrive;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+// import frc.robot.commands.Autos;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
