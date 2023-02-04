@@ -8,21 +8,21 @@ import frc.robot.subsystems.Chassis;
 
 public class DefaultDrive extends CommandBase {
     private final Chassis m_drive;
-    private final DoubleSupplier m_leftSpeed;
-    private final DoubleSupplier m_rightSpeed;
+    private final DoubleSupplier m_xSpeed;
+    private final DoubleSupplier m_zRotation;
     public final BooleanSupplier m_joyInput;
 
     
-    public DefaultDrive(Chassis sybsystem, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed, BooleanSupplier joyInput){
+    public DefaultDrive(Chassis sybsystem, DoubleSupplier xSpeed, DoubleSupplier zRotation, BooleanSupplier joyInput){
         m_drive = sybsystem;
-        m_leftSpeed = leftSpeed;
-        m_rightSpeed = rightSpeed;
+        m_xSpeed = xSpeed;
+        m_zRotation = zRotation;
         m_joyInput = joyInput;
         addRequirements(m_drive);
     }
 
     @Override
     public void execute(){
-        m_drive.drive(m_leftSpeed.getAsDouble(), m_rightSpeed.getAsDouble(), m_joyInput.getAsBoolean());
+        m_drive.drive(m_xSpeed.getAsDouble(), m_zRotation.getAsDouble(), m_joyInput.getAsBoolean());
     }
 }
