@@ -43,7 +43,7 @@ public class RobotContainer {
     (
       new DefaultDrive(m_chassisSubsystem,
       () -> -m_driverController.getLeftY(),
-      () -> m_driverController.getLeftX(),
+      () -> m_driverController.getRightX(),
       () -> ChassisConstants.squareInputs)
     );
 

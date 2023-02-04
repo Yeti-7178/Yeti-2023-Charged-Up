@@ -42,8 +42,8 @@ public class Chassis extends SubsystemBase {
         m_frontRight.setInverted(true);
         m_rearRight.setInverted(true);
     }
-    public void drive(double leftSpeed, double rightSpeed, Boolean joyInput){
-        m_drive.tankDrive(leftSpeed, rightSpeed, joyInput);
+    public void drive(double xSpeed, double zRotation, Boolean joyInput){
+        m_drive.arcadeDrive(xSpeed, zRotation, joyInput);
     }
 
 }
