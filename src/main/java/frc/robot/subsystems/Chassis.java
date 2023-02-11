@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-// import com.revrobotics.RelativeEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -25,6 +25,16 @@ public class Chassis extends SubsystemBase {
     CANSparkMax m_rearRight2 = new CANSparkMax(ChassisConstants.kRightRearPort2, MotorType.kBrushless);
     MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight1,m_frontRight2, m_rearRight1,m_rearRight2);
 
+
+    private RelativeEncoder m_leftFrontEncoder1 = m_frontLeft1.getEncoder();
+    private RelativeEncoder m_rightFrontEncoder1 = m_frontLeft2.getEncoder();
+    private RelativeEncoder m_rightRearEncoder1 = m_rearLeft1.getEncoder();
+    private RelativeEncoder m_leftRearEncoder1 = m_rearLeft2.getEncoder();
+    private RelativeEncoder m_leftFrontEncoder2 = m_frontRight1.getEncoder();
+    private RelativeEncoder m_rightFrontEncoder2 = m_frontRight2.getEncoder();
+    private RelativeEncoder m_rightRearEncoder2 = m_rearRight1.getEncoder();
+    private RelativeEncoder m_leftRearEncoder2 = m_rearRight2.getEncoder();
+    
     DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
     public Chassis()
@@ -63,13 +73,31 @@ public class Chassis extends SubsystemBase {
         m_rearRight2.setInverted(true);
     }
     public void drive(double xSpeed, double zRotation, boolean b){
-        m_drive.arcadeDrive(xSpeed, -zRotation);
+        m_drive.arcadeDrive(xSpeed, -zRotation, b);
     }
-    public double getAverageEncoderDistanceInches() {
-        return 0;
+    private double getaverageEncoder(RelativeEncoder encode1, RelativeEncoder encode2){
+        return (encode1.getPosition() + encode2.getPosition())/2;
     }
-    public double drive1(){
-        return 0;
+
+    public double getAverageEncoderDistanceInches(){
+        return ChassisConstants.kEncoderConversionFactor * ((getaverageEncoder(m_leftFrontEncoder1, m_leftFrontEncoder2)+getaverageEncoder(m_rightFrontEncoder1, m_rightFrontEncoder2))/2);
+    }
+
+    public double getAverageEcoderPosition(){
+        return(getaverageEncoder(m_leftFrontEncoder1, m_leftFrontEncoder2) + ((-1.0)*getaverageEncoder(m_rightFrontEncoder1, m_rightFrontEncoder2))) / 2.0;
+    }
+
+    public double getLeftFrontEncoder(){
+        return getaverageEncoder(m_leftFrontEncoder1, m_leftFrontEncoder2);
+    }
+    public double getRightFrontEncoder(){
+        return getaverageEncoder(m_rightFrontEncoder1, m_rightFrontEncoder2);
+    }
+    public double getRightRearEncoder(){
+        return getaverageEncoder(m_rightRearEncoder1, m_rightRearEncoder2);
+    }
+    public double getLeftRearEncoder(){
+        return getaverageEncoder(m_leftRearEncoder1, m_leftRearEncoder2);
     }
 
 }
