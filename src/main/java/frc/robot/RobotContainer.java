@@ -5,6 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+
+
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.cameraserver.CameraServer;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -12,9 +18,12 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Chassis;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.commands.Auton.*;
 import frc.robot.Constants.ChassisConstants;
 import frc.robot.Constants.OIConstants;
-
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import frc.robot.commands.Auton.AutoTest;
 import frc.robot.commands.drive.DefaultDrive;
 // import frc.robot.commands.Autos;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,7 +39,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  
   private final Chassis m_chassisSubsystem = new Chassis();
+  SendableChooser<Command> m_autonChooser = new SendableChooser<>();
   // Replace with CommandPS4Controller or CommandJoystick if needed
 
   XboxController m_driverController = new XboxController(OIConstants.controller1);
@@ -38,15 +49,24 @@ public class RobotContainer {
 
   public RobotContainer()
   {
+    CameraServer.startAutomaticCapture();
+
     configureBindings();
     m_chassisSubsystem.setDefaultCommand
     (
       new DefaultDrive(m_chassisSubsystem,
-      () -> -m_driverController.getLeftY()*.5,
-      () -> m_driverController.getRightX()*.8,
+      () -> -m_driverController.getLeftY()*.8,
+      () -> m_driverController.getRightX()*.6,
       () -> ChassisConstants.squareInputs)
     );
 
+
+    // add more to have more auton options
+    m_autonChooser.addOption("AutonTest",new AutoTest(m_chassisSubsystem));
+    Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2,1);
+  
+
+    
   }
 
 
@@ -68,7 +88,10 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
 
-  // }
+
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    return m_autonChooser.getSelected();
+  }
 }

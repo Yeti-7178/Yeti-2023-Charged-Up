@@ -17,14 +17,14 @@ public final class Constants
 
   public static final class ChassisConstants
   {
-    public static final int kLeftFrontPort1 = 2;
-    public static final int kLeftFrontPort2 = 20;
-    public static final int kRightFrontPort1 = 15;
-    public static final int kRightFrontPort2 = 13;
-    public static final int kRightRearPort1 = 12;
-    public static final int kRightRearPort2 = 3;
-    public static final int kLeftRearPort1 = 14;
-    public static final int kLeftRearPort2 = 1;
+    public static final int kLeftFrontPort1 = 1;
+    public static final int kLeftFrontPort2 = 2;
+    public static final int kRightFrontPort1 = 5;
+    public static final int kRightFrontPort2 = 6;
+    public static final int kRightRearPort1 = 7;
+    public static final int kRightRearPort2 = 8;
+    public static final int kLeftRearPort1 = 3;
+    public static final int kLeftRearPort2 = 4;
 
 
     public static final boolean squareInputs = true;
