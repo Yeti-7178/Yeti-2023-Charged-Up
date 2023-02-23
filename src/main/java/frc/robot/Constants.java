@@ -14,7 +14,6 @@ package frc.robot;
  */
 public final class Constants 
 {
-  //test1
 
   public static final class ChassisConstants
   {
@@ -39,6 +38,9 @@ public final class Constants
   public static final class OIConstants{
     public static final int controller1 = 0;
     public static final int controller2 = 2;
+  }
+  public static final class ArmConstants{
+    public static final int armPort = 0;
   }
 
   
