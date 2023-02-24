@@ -39,6 +39,9 @@ public final class Constants
     public static final int controller1 = 0;
     public static final int controller2 = 2;
   }
+  public static final class ArmConstants{
+    public static final int armPort = 0;
+  }
 
   
 }
