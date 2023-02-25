@@ -40,7 +40,11 @@ public final class Constants
     public static final int controller2 = 2;
   }
   public static final class ArmConstants{
-    public static final int armPort = 0;
+    public static final int armPort = 10;
+    public static final int motorPort = 0;
+    public static final int kModuleID = 10;
+    public static final int kCurrentLimit = 40;
+    public static final double kHangMotorSpeed = .75;
   }
 
   
