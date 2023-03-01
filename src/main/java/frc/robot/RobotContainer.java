@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Chassis;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Auton.*;
 import frc.robot.Constants.ChassisConstants;
 import frc.robot.Constants.OIConstants;
@@ -42,7 +43,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   
   private final Chassis m_chassisSubsystem = new Chassis();
-  private final Arm m_arm = new Arm();
+  public final Arm m_arm = new Arm();
   SendableChooser<Command> m_autonChooser = new SendableChooser<>();
   // Replace with CommandPS4Controller or CommandJoystick if needed
 
@@ -60,14 +61,15 @@ public class RobotContainer {
     (
       new DefaultDrive(m_chassisSubsystem,
       () -> -m_driverController.getLeftY()*.8,
-      () -> m_driverController.getRightX()*.6,
+      () -> m_driverController.getRightX()*.8,
       () -> ChassisConstants.squareInputs)
     );
     m_arm.intakeDeploy();
 
 
     // add more to have more auton options
-    m_autonChooser.addOption("AutonTest",new AutoTest(m_chassisSubsystem));
+    m_autonChooser.addOption("AutonTest",new AutoTest(m_chassisSubsystem,m_arm));
+    m_autonChooser.addOption("AutonMove out of the hub station.",new Autoplaceblance(m_chassisSubsystem));
     Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2,1);
   
 
@@ -87,19 +89,41 @@ public class RobotContainer {
   private void configureBindings() {
 
     //claw e
-    new JoystickButton(m_coDriverController, Button.kA.value)
+    new JoystickButton(m_driverController, Button.kA.value)
       .onTrue(
         new InstantCommand(m_arm::clawExtendDeploy)
       );
       //Extends the claw out
-      new JoystickButton(m_coDriverController, Button.kB.value)
+      new JoystickButton(m_driverController, Button.kB.value)
       .onTrue(
         new InstantCommand(m_arm::clawDeploy)
       );
-      new JoystickButton(m_coDriverController, Button.kY.value)
+      new JoystickButton(m_driverController, Button.kY.value)
       .onTrue(
         new InstantCommand(m_arm::ClawRotationDeploy)
       );
+      new JoystickButton(m_driverController, Button.kRightBumper.value)
+.onTrue(
+  new InstantCommand(m_arm::armDown)
+)
+.onFalse(
+  new InstantCommand(m_arm::armStop)
+);
+new JoystickButton(m_driverController, Button.kLeftBumper.value)
+.onTrue(
+  new InstantCommand(m_arm::armUp)
+)
+.onFalse(
+  new InstantCommand(m_arm::armStop)
+);
+new JoystickButton(m_driverController, Button.kX.value)
+.onTrue(
+  new InstantCommand(m_arm::intakeDeploy)
+);
+
+
+
+
 }
   
   
@@ -115,4 +139,6 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return m_autonChooser.getSelected();
   }
+
+
 }

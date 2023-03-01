@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.fasterxml.jackson.databind.deser.impl.FailingDeserializer;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -25,7 +27,7 @@ public final class Constants
     public static final int kRightRearPort2 = 8;
     public static final int kLeftRearPort1 = 3;
     public static final int kLeftRearPort2 = 4;
-
+    public static final int amrmortor = 10;
 
     public static final boolean squareInputs = true;
 
@@ -41,10 +43,10 @@ public final class Constants
   }
   public static final class ArmConstants{
     public static final int armPort = 10;
-    public static final int motorPort = 0;
+    public static final int motorPort = 20;
     public static final int kModuleID = 10;
     public static final int kCurrentLimit = 40;
-    public static final double kHangMotorSpeed = .75;
+    public static final double kHangMotorSpeed = 20;
   }
 
   
