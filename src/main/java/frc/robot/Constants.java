@@ -39,14 +39,14 @@ public final class Constants
   }
   public static final class OIConstants{
     public static final int controller1 = 0;
-    public static final int controller2 = 2;
+    public static final int controller2 = 1;
   }
   public static final class ArmConstants{
     public static final int armPort = 10;
     public static final int motorPort = 20;
     public static final int kModuleID = 10;
     public static final int kCurrentLimit = 40;
-    public static final double kHangMotorSpeed = 20;
+    public static final double kHangMotorSpeed = 0.75;
   }
 
   
