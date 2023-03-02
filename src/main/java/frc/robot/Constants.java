@@ -47,6 +47,7 @@ public final class Constants
     public static final int kModuleID = 10;
     public static final int kCurrentLimit = 40;
     public static final double kHangMotorSpeed = 20;
+    public static final double kEncoderConversionFactor = 6 * Math.PI / 9.52;
   }
 
   

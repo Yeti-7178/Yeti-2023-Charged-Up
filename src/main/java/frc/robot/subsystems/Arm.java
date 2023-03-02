@@ -17,9 +17,10 @@ public class Arm extends SubsystemBase
     
     public final CANSparkMax m_intakeMotor = new CANSparkMax(ArmConstants.motorPort, MotorType.kBrushless);
     final Compressor m_compress = new Compressor(ArmConstants.armPort, PneumaticsModuleType.CTREPCM);
-    final Solenoid m_intakeDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,4);
-    // private RelativeEncoder m_intakeEncoder = m_intakeMotor.getEncoder();
+    private RelativeEncoder m_intakeEncoder = m_intakeMotor.getEncoder();
 
+
+    final Solenoid m_intakeDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,4);
     final Solenoid m_ClawDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,5);
     final Solenoid m_ClawExtendDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,6);
     final Solenoid m_ClawRotationDeploy= new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,7);
@@ -61,6 +62,17 @@ public class Arm extends SubsystemBase
     }
     public void ClawRotationDeploy(){
         m_ClawRotationDeploy.toggle();
+    }
+    public double getAverageEncoderDistanceInches(){
+        return(ArmConstants.kEncoderConversionFactor * (m_intakeEncoder.getPosition())/2);
+    }
+
+    public void setArmDistence(double distence) {
+        double armRotations = m_intakeMotor.getEncoder().getPosition();
+        while(armRotations<= distence){
+            m_intakeMotor.set(0.5);
+        }
+        m_intakeMotor.set(0.0);
     }
 
     // public double getIntakeEncoder() {
