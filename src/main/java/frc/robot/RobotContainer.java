@@ -69,7 +69,7 @@ public class RobotContainer {
 
     // add more to have more auton options
     m_autonChooser.addOption("AutonTest",new AutoTest(m_chassisSubsystem,m_arm));
-    m_autonChooser.addOption("AutonMove out of the hub station.",new Autoplaceblance(m_chassisSubsystem));
+    m_autonChooser.addOption("AutonMove out of the hub station.",new Autogobackandplathform(m_chassisSubsystem,m_arm));
     Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2,1);
   
 
@@ -89,34 +89,34 @@ public class RobotContainer {
   private void configureBindings() {
 
     //claw e
-    new JoystickButton(m_driverController, Button.kA.value)
+    new JoystickButton(m_coDriverController, Button.kA.value)
       .onTrue(
         new InstantCommand(m_arm::clawExtendDeploy)
       );
       //Extends the claw out
-      new JoystickButton(m_driverController, Button.kB.value)
+      new JoystickButton(m_driverController, Button.kRightBumper.value)
       .onTrue(
         new InstantCommand(m_arm::clawDeploy)
       );
-      new JoystickButton(m_driverController, Button.kY.value)
+      new JoystickButton(m_coDriverController, Button.kY.value)
       .onTrue(
         new InstantCommand(m_arm::ClawRotationDeploy)
       );
-      new JoystickButton(m_driverController, Button.kRightBumper.value)
+      new JoystickButton(m_coDriverController, Button.kRightBumper.value)
 .onTrue(
   new InstantCommand(m_arm::armDown)
 )
 .onFalse(
   new InstantCommand(m_arm::armStop)
 );
-new JoystickButton(m_driverController, Button.kLeftBumper.value)
+new JoystickButton(m_coDriverController, Button.kLeftBumper.value)
 .onTrue(
   new InstantCommand(m_arm::armUp)
 )
 .onFalse(
   new InstantCommand(m_arm::armStop)
 );
-new JoystickButton(m_driverController, Button.kX.value)
+new JoystickButton(m_coDriverController, Button.kX.value)
 .onTrue(
   new InstantCommand(m_arm::intakeDeploy)
 );

@@ -12,7 +12,7 @@ public class AutoTest extends SequentialCommandGroup {
         m_arm = arm;
         addCommands(
             new SequentialCommandGroup(
-                    
+                
                     new InstantCommand(m_arm::clawDeploy),
                     new WaitCommand(5),
                     new InstantCommand(m_arm::clawExtendDeploy),

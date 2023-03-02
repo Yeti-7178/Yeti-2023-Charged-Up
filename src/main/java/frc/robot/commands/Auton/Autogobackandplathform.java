@@ -12,7 +12,7 @@ public class Autogobackandplathform extends SequentialCommandGroup {
         m_arm = arm;
         addCommands(
             new SequentialCommandGroup(
-                new WaitCommand(1),
+                
                 new InstantCommand(m_arm::armUp),
                 new WaitCommand(1),
                 new InstantCommand(m_arm::armStop),
