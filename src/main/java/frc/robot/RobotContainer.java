@@ -31,6 +31,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Arm;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 
 
 /**
@@ -68,8 +70,10 @@ public class RobotContainer {
 
 
     // add more to have more auton options
-    m_autonChooser.addOption("AutonTest",new AutoTest(m_chassisSubsystem,m_arm));
-    m_autonChooser.addOption("AutonMove out of the hub station.",new Autogobackandplathform(m_chassisSubsystem,m_arm));
+   // m_autonChooser.addOption("AutonTest",new AutoTest(m_chassisSubsystem,m_arm));
+    m_autonChooser.addOption("Auton place a cone/cube and Move out of the hub station.",new Autogobackandplathform(m_chassisSubsystem,m_arm));
+    m_autonChooser.addOption("Auton place a cone/cube and platform",new AutonConePlatform(m_arm,m_chassisSubsystem));
+    m_autonChooser.addOption("Auton place",new Autoplaceblance(m_chassisSubsystem));
     Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2,1);
   
 
@@ -88,8 +92,10 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
+    // new Trigger(null, null)
+
     //claw e
-    new JoystickButton(m_coDriverController, Button.kA.value)
+    new JoystickButton(m_coDriverController, Button.kY.value)
       .onTrue(
         new InstantCommand(m_arm::clawExtendDeploy)
       );
@@ -98,7 +104,7 @@ public class RobotContainer {
       .onTrue(
         new InstantCommand(m_arm::clawDeploy)
       );
-      new JoystickButton(m_coDriverController, Button.kY.value)
+      new JoystickButton(m_coDriverController, Button.kA.value)
       .onTrue(
         new InstantCommand(m_arm::ClawRotationDeploy)
       );
