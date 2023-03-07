@@ -62,8 +62,8 @@ public class RobotContainer {
     m_chassisSubsystem.setDefaultCommand
     (
       new DefaultDrive(m_chassisSubsystem,
-      () -> -m_driverController.getLeftY()*.8,
-      () -> m_driverController.getRightX()*.8,
+      () -> -m_driverController.getLeftY(),
+      () -> m_driverController.getRightX(),
       () -> ChassisConstants.squareInputs)
     );
     m_arm.intakeDeploy();

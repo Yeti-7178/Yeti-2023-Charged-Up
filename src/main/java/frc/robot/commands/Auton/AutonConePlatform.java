@@ -30,18 +30,20 @@ public class AutonConePlatform extends SequentialCommandGroup {
                 // new DriveDistance(.5, -0.45, chassis),
                 // new DriveDistance(.6, 0.45, chassis),
                 
-
+                new InstantCommand(m_arm::clawExtendDeploy),
                 new InstantCommand(m_arm::ClawRotationDeploy),
                 new WaitCommand(2),
                 new InstantCommand(m_arm::ClawRotationDeploy),
                 new WaitCommand(2),
+                new DriveDistance(4, .45, chassis),
+                new WaitCommand(2),
                 new InstantCommand(m_arm::clawDeploy),
                 new WaitCommand(2),
-                new DriveDistance(9, -.45, chassis),
+                new DriveDistance(11, -.45, chassis),
                 new InstantCommand(m_arm::clawDeploy),
-                new WaitCommand(2),
+                new WaitCommand(1),
 
-                new DriveDistance(115, -0.45, chassis)
+                new DriveDistance(119, -0.45, chassis)
                
                 // new WaitCommand(5),
                 // new InstantCommand(m_arm::clawDeploy),
