@@ -1,4 +1,4 @@
-package frc.robot.commands.Auton.Arm;
+package frc.robot.commands.Arm;
 
 
 
@@ -34,12 +34,12 @@ public class ArmDistance extends CommandBase{
 
     @Override
     public void execute(){
-            if(Math.abs(m_arm.getAverageEncoderDistanceInches()-start_encoders)>=m_distance){
-                m_arm.armStop();
-                m_complete = true;
-            }else{
-                m_arm.setArmDistence(10);
-            }
+            // if(Math.abs(m_arm.getAverageEncoderDistanceInches()-start_encoders)>=m_distance){
+            //     m_arm.drive(0.0,0.0,false);
+            //     m_complete = true;
+            // }else{
+            //     m_arm.drive(m_speed,0.0,false);
+            // }
     
         // }else{
         //     if(Math.abs(m_drive.getAverageEncoderDistanceInches()-start_encoders)<=m_distance){

@@ -31,6 +31,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Arm;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 
 
 /**
@@ -60,16 +62,18 @@ public class RobotContainer {
     m_chassisSubsystem.setDefaultCommand
     (
       new DefaultDrive(m_chassisSubsystem,
-      () -> -m_driverController.getLeftY()*.8,
-      () -> m_driverController.getRightX()*.8,
+      () -> -m_driverController.getLeftY(),
+      () -> m_driverController.getRightX(),
       () -> ChassisConstants.squareInputs)
     );
     m_arm.intakeDeploy();
 
 
     // add more to have more auton options
-    m_autonChooser.addOption("AutonTest",new AutoTest(m_chassisSubsystem,m_arm));
-    m_autonChooser.addOption("AutonMove out of the hub station.",new Autoplaceblance(m_chassisSubsystem));
+   // m_autonChooser.addOption("AutonTest",new AutoTest(m_chassisSubsystem,m_arm));
+    m_autonChooser.addOption("Auton place a cone/cube and Move out of the hub station.",new Autogobackandplathform(m_chassisSubsystem,m_arm));
+    m_autonChooser.addOption("Auton place a cone/cube and platform",new AutonConePlatform(m_arm,m_chassisSubsystem));
+    m_autonChooser.addOption("Auton place",new Autoplaceblance(m_chassisSubsystem));
     Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2,1);
   
 
@@ -88,35 +92,37 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
+    // new Trigger(null, null)
+
     //claw e
-    new JoystickButton(m_driverController, Button.kA.value)
+    new JoystickButton(m_coDriverController, Button.kY.value)
       .onTrue(
         new InstantCommand(m_arm::clawExtendDeploy)
       );
       //Extends the claw out
-      new JoystickButton(m_driverController, Button.kB.value)
+      new JoystickButton(m_driverController, Button.kRightBumper.value)
       .onTrue(
         new InstantCommand(m_arm::clawDeploy)
       );
-      new JoystickButton(m_driverController, Button.kY.value)
+      new JoystickButton(m_coDriverController, Button.kA.value)
       .onTrue(
         new InstantCommand(m_arm::ClawRotationDeploy)
       );
-      new JoystickButton(m_driverController, Button.kRightBumper.value)
+      new JoystickButton(m_coDriverController, Button.kRightBumper.value)
 .onTrue(
   new InstantCommand(m_arm::armDown)
 )
 .onFalse(
   new InstantCommand(m_arm::armStop)
 );
-new JoystickButton(m_driverController, Button.kLeftBumper.value)
+new JoystickButton(m_coDriverController, Button.kLeftBumper.value)
 .onTrue(
   new InstantCommand(m_arm::armUp)
 )
 .onFalse(
   new InstantCommand(m_arm::armStop)
 );
-new JoystickButton(m_driverController, Button.kX.value)
+new JoystickButton(m_coDriverController, Button.kX.value)
 .onTrue(
   new InstantCommand(m_arm::intakeDeploy)
 );

@@ -13,10 +13,9 @@ import frc.robot.commands.drive.DriveDistance;
 public class Autoplaceblance extends SequentialCommandGroup {
     public Autoplaceblance(Chassis chassis){
         addCommands(
-            new SequentialCommandGroup(
-
+            new SequentialCommandGroup( 
                     new DriveDistance(110, -.3, chassis),
-                     new DriveDistance(1, 0.3, chassis)
+                    new DriveDistance(1, 0.3, chassis)
             )
            
         

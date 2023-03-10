@@ -22,8 +22,8 @@ public class Arm extends SubsystemBase
 
     final Solenoid m_intakeDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,4);
     final Solenoid m_ClawDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,5);
-    final Solenoid m_ClawExtendDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,6);
-    final Solenoid m_ClawRotationDeploy= new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,7);
+    final Solenoid m_ClawExtendDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,7);
+    final Solenoid m_ClawRotationDeploy= new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,6);
 //claw open/close-one pnumatic
 //arm up/down-one motor
 //claw out/in- two pnumatics
@@ -34,6 +34,10 @@ public class Arm extends SubsystemBase
         m_intakeMotor.restoreFactoryDefaults();
         m_intakeMotor.setSmartCurrentLimit(ArmConstants.kCurrentLimit);
         m_intakeMotor.setIdleMode(IdleMode.kBrake);
+        
+    }
+    public void arm(double ySpeed, boolean b){
+        
     }
 
     public void armUp()
@@ -67,10 +71,10 @@ public class Arm extends SubsystemBase
         return(ArmConstants.kEncoderConversionFactor * (m_intakeEncoder.getPosition())/2);
     }
 
-    public void setArmDistence(double distence) {
+    public void setArmDistence(double speed, double distence) {
         double armRotations = m_intakeMotor.getEncoder().getPosition();
-        while(armRotations<= distence){
-            m_intakeMotor.set(0.5);
+        while(armRotations>= distence){
+            m_intakeMotor.set(speed);
         }
         m_intakeMotor.set(0.0);
     }
@@ -82,5 +86,4 @@ public class Arm extends SubsystemBase
     //     m_intakeEncoder.setPosition(0.0);
 
     // }
-
 }
