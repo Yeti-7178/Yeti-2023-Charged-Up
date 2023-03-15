@@ -36,8 +36,8 @@ public class Arm extends SubsystemBase
         m_intakeMotor.setIdleMode(IdleMode.kBrake);
         
     }
-    public void arm(double ySpeed, boolean b){
-        
+    public void setArmSpeed(double ySpeed){
+        m_intakeMotor.set(ySpeed);
     }
 
     public void armUp()

@@ -50,6 +50,7 @@ public final class Constants
     public static final double kEncoderConversionFactor = 6 * Math.PI / 9.52;
 
     public static final double kHangMotorSpeed = 0.8;
+    public static final double kJoystickSensitivity = 0.05;
 
   }
 
