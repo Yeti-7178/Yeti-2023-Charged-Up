@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+//import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -19,6 +20,7 @@ public class Arm extends SubsystemBase
     final Compressor m_compress = new Compressor(ArmConstants.armPort, PneumaticsModuleType.CTREPCM);
     private RelativeEncoder m_intakeEncoder = m_intakeMotor.getEncoder();
 
+    //public SparkMaxPIDController armPIDController = m_intakeMotor.getPIDController();
 
     final Solenoid m_intakeDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,4);
     final Solenoid m_ClawDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,5);

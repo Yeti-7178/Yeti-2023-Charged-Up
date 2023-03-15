@@ -51,6 +51,17 @@ public final class Constants
 
     public static final double kHangMotorSpeed = 0.8;
 
+
+    public static final double kProportionalTweak = 1;
+    public static final double kDerivativeTweak = 1;
+    public static final double kIntegralTweak = 1;
+
+    //figure out and put values in here
+    public static final double kLowestLevelPosition = 0;
+    public static final double kMiddleLevelPosition = 0;
+    public static final double kHighestLevelPosition = 0;
+
+    public static final double kdt = 0.001; //find out units and value for this
   }
 
   
