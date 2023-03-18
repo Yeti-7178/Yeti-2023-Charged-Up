@@ -23,15 +23,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Auton.*;
 import frc.robot.Constants.ChassisConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.commands.Auton.AutoTest;
 import frc.robot.commands.drive.DefaultDrive;
 // import frc.robot.commands.Autos;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.Trigger; //this is imported multiple times so I deleted it
 import frc.robot.subsystems.Arm;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
 
@@ -67,6 +67,10 @@ public class RobotContainer {
       () -> ChassisConstants.squareInputs)
     );
     m_arm.intakeDeploy();
+
+    if (Math.abs(m_coDriverController.getLeftY()) < ArmConstants.kJoystickSensitivity) {
+      m_arm.setArmSpeed(m_coDriverController.getLeftY());
+    }
 
 
     // add more to have more auton options
@@ -109,6 +113,7 @@ public class RobotContainer {
         new InstantCommand(m_arm::ClawRotationDeploy)
       );
       new JoystickButton(m_coDriverController, Button.kRightBumper.value)
+      //I don't understand why the spacing changes here or if there's reason behind that
 .onTrue(
   new InstantCommand(m_arm::armDown)
 )
