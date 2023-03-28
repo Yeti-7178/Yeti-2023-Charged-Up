@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -55,14 +56,14 @@ public class Chassis extends SubsystemBase {
         m_rearRight2.setSmartCurrentLimit(ChassisConstants.kCurrentLimit);
         m_frontLeft1.setSmartCurrentLimit(ChassisConstants.kCurrentLimit);
         m_frontLeft2.setSmartCurrentLimit(ChassisConstants.kCurrentLimit);
-        m_frontLeft1.setIdleMode(IdleMode.kCoast);
-        m_frontLeft2.setIdleMode(IdleMode.kCoast);
-        m_frontRight1.setIdleMode(IdleMode.kCoast);
-        m_frontRight2.setIdleMode(IdleMode.kCoast);
-        m_rearRight1.setIdleMode(IdleMode.kCoast);
-        m_rearRight2.setIdleMode(IdleMode.kCoast);
-        m_frontLeft1.setIdleMode(IdleMode.kCoast);
-        m_frontLeft2.setIdleMode(IdleMode.kCoast);
+        m_frontLeft1.setIdleMode(IdleMode.kBrake);
+        m_frontLeft2.setIdleMode(IdleMode.kBrake);
+        m_frontRight1.setIdleMode(IdleMode.kBrake);
+        m_frontRight2.setIdleMode(IdleMode.kBrake);
+        m_rearRight1.setIdleMode(IdleMode.kBrake);
+        m_rearRight2.setIdleMode(IdleMode.kBrake);
+        m_frontLeft1.setIdleMode(IdleMode.kBrake);
+        m_frontLeft2.setIdleMode(IdleMode.kBrake);
         m_frontLeft1.setInverted(false);
         m_frontLeft2.setInverted(false);
         m_frontLeft1.setInverted(false);
@@ -98,6 +99,48 @@ public class Chassis extends SubsystemBase {
     }
     public double getLeftRearEncoder(){
         return getaverageEncoder(m_leftRearEncoder1, m_leftRearEncoder2);
+    }
+    public void setBrakeMode(){
+        m_frontLeft1.setIdleMode(IdleMode.kBrake);
+        m_frontLeft2.setIdleMode(IdleMode.kBrake);
+        m_rearLeft1.setIdleMode(IdleMode.kBrake);
+        m_rearLeft2.setIdleMode(IdleMode.kBrake);
+
+        m_frontRight1.setIdleMode(IdleMode.kBrake);
+        m_frontRight2.setIdleMode(IdleMode.kBrake);
+
+        m_rearRight1.setIdleMode(IdleMode.kBrake);
+        m_rearRight2.setIdleMode(IdleMode.kBrake);
+
+    }
+    public void setCoastMode(){
+        m_frontLeft1.setIdleMode(IdleMode.kCoast);
+        m_frontLeft2.setIdleMode(IdleMode.kCoast);
+        m_rearLeft1.setIdleMode(IdleMode.kCoast);
+        m_rearLeft2.setIdleMode(IdleMode.kCoast);
+
+        m_frontRight1.setIdleMode(IdleMode.kCoast);
+        m_frontRight2.setIdleMode(IdleMode.kCoast);
+
+        m_rearRight1.setIdleMode(IdleMode.kCoast);
+        m_rearRight2.setIdleMode(IdleMode.kCoast);
+
+    }
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("leftFrontEncoder1", m_leftFrontEncoder1.getPosition());
+        // SmartDashboard.putNumber("leftFrontEncoder2", m_leftFrontEncoder2.getPosition());
+        // SmartDashboard.putNumber("rightFrontEncoder1", m_rightFrontEncoder1.getPosition());
+        // SmartDashboard.putNumber("rightFrontEncoder2", m_rightFrontEncoder2.getPosition());
+        // SmartDashboard.putNumber("leftBackEncoder1", m_leftRearEncoder1.getPosition());
+        // SmartDashboard.putNumber("leftBackEncoder2", m_leftRearEncoder2.getPosition());
+        // SmartDashboard.putNumber("rightBackEncoder1", m_rightRearEncoder1.getPosition());
+        // SmartDashboard.putNumber("rightBackEncoder2", m_rightRearEncoder2.getPosition());
+
+        // SmartDashboard.putNumber("averageFrontLeft", getaverageEncoder(m_leftFrontEncoder1, m_leftFrontEncoder2));
+        // SmartDashboard.putNumber("averageBackLeft", getaverageEncoder(m_leftRearEncoder1, m_leftRearEncoder2));
+        // SmartDashboard.putNumber("averageFrontRight", getaverageEncoder(m_rightFrontEncoder1, m_rightFrontEncoder2));
+        // SmartDashboard.putNumber("averageBackRight", getaverageEncoder(m_rightRearEncoder1, m_rightRearEncoder2));
     }
 
 }

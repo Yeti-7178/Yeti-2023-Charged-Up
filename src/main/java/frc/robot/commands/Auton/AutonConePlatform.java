@@ -29,7 +29,8 @@ public class AutonConePlatform extends SequentialCommandGroup {
                 // new DriveDistance(0, .2, chassis), //ADD VALUES
                 // new DriveDistance(.5, -0.45, chassis),
                 // new DriveDistance(.6, 0.45, chassis),
-                
+
+                new InstantCommand(m_arm::intakeDeploy),
                 new InstantCommand(m_arm::clawExtendDeploy),
                 new InstantCommand(m_arm::ClawRotationDeploy),
                 new WaitCommand(2),

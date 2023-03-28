@@ -27,13 +27,13 @@ public final class Constants
     public static final int kRightRearPort2 = 8;
     public static final int kLeftRearPort1 = 3;
     public static final int kLeftRearPort2 = 4;
-    public static final int amrmortor = 10;
+    public static final int amrmortor = 20;
 
     public static final boolean squareInputs = true;
 
     public static final int kCurrentLimit = 40;
     
-    public static final double kAutoRotationSpeed = 0.2; // speed to rotate for auto aim
+    public static final double kAutoRotationSpeed = 0.45; // speed to rotate for auto aim
     public static final double kEncoderConversionFactor = 6 * Math.PI / 9.52;
     
   }
@@ -50,6 +50,13 @@ public final class Constants
     public static final double kEncoderConversionFactor = 6 * Math.PI / 9.52;
 
     public static final double kHangMotorSpeed = 0.8;
+
+    public static final double kOffBalanceAngleThresholdDegrees = 4.5;
+    public static final double kOnBalanceAngleThresholdDegrees = 4.5;
+
+  
+    public static final double kAutoBalanceMultiplier = 0.55;
+    public static final double kAutoBalanceDerivativeMultiplier = 0.6;
 
   }
 

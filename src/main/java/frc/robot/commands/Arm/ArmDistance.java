@@ -14,9 +14,8 @@ public class ArmDistance extends CommandBase{
     private double start_encoders;
     private boolean m_complete = false;
 
-    public ArmDistance(double inches, double speed, Arm subsystem){
-        m_distance = inches;
-        m_speed = speed;
+    public ArmDistance(double rotation,Arm subsystem){
+        m_distance = rotation;
         m_arm = subsystem;
         addRequirements(m_arm);
     }
@@ -24,7 +23,7 @@ public class ArmDistance extends CommandBase{
     @Override
     public void initialize(){
         m_complete = false;
-        start_encoders = m_arm.getAverageEncoderDistanceInches();
+        // start_encoders = m_arm.getAverageEncoderDistanceInches();
     }
 
     @Override
@@ -34,22 +33,7 @@ public class ArmDistance extends CommandBase{
 
     @Override
     public void execute(){
-            // if(Math.abs(m_arm.getAverageEncoderDistanceInches()-start_encoders)>=m_distance){
-            //     m_arm.drive(0.0,0.0,false);
-            //     m_complete = true;
-            // }else{
-            //     m_arm.drive(m_speed,0.0,false);
-            // }
-    
-        // }else{
-        //     if(Math.abs(m_drive.getAverageEncoderDistanceInches()-start_encoders)<=m_distance){
-        //         m_drive.drive(0.0,0.0,0.0);
-        //         m_complete = true;
-        //     }else{
-        //         m_drive.drive(m_speed,0.0,0.0);
-        //     }
-    
-        // }
+        m_arm.setArmDistence(m_distance);
     }
 
     @Override
