@@ -8,9 +8,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.revrobotics.SparkMaxLimitSwitch;
 
 public class Arm extends SubsystemBase
 {
@@ -18,6 +19,8 @@ public class Arm extends SubsystemBase
     public final CANSparkMax m_intakeMotor = new CANSparkMax(ArmConstants.motorPort, MotorType.kBrushless);
     final Compressor m_compress = new Compressor(ArmConstants.armPort, PneumaticsModuleType.CTREPCM);
     public RelativeEncoder m_intakeEncoder = m_intakeMotor.getEncoder();
+    public SparkMaxLimitSwitch bottomLimit = m_intakeMotor.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+    public SparkMaxLimitSwitch topLimit = m_intakeMotor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
 
 
     final Solenoid m_intakeDeploy = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,4);
@@ -35,8 +38,6 @@ public class Arm extends SubsystemBase
         m_intakeMotor.setSmartCurrentLimit(ArmConstants.kCurrentLimit);
         m_intakeMotor.setIdleMode(IdleMode.kBrake);
         
-    }
-    public void arm(double ySpeed, boolean b){
         
     }
 
@@ -51,6 +52,36 @@ public class Arm extends SubsystemBase
     public void armStop()
     {
         m_intakeMotor.set(0.0);
+    }
+
+    //My idea is that this value can be set in other files such as auton or whatever
+    public double moveUpTo = -30; //-47
+    public double moveDownTo = 30; //130
+    public void armMoveUp(){
+        double startPos = m_intakeEncoder.getPosition();
+
+        while (m_intakeEncoder.getPosition() > startPos + moveUpTo) {
+            m_intakeMotor.set(ArmConstants.kHangMotorSpeed);
+
+            //should stop the function if the motor hits the limit switch
+            if (topLimit.isPressed()) {
+                m_intakeMotor.set(0);
+                return;
+            }
+        }
+    }
+
+    //this is just a copy of armMoveUp
+    public void armMoveDown(){
+        double startPos = m_intakeEncoder.getPosition();
+
+        while (m_intakeEncoder.getPosition() < startPos + moveDownTo) {
+            m_intakeMotor.set(-ArmConstants.kHangMotorSpeed);
+            if (bottomLimit.isPressed()) {
+                m_intakeMotor.set(0);
+                return;
+            }
+        }
     }
 
     public void intakeDeploy(){
@@ -70,9 +101,25 @@ public class Arm extends SubsystemBase
     public double getAverageEncoderDistanceInches(){
         return(m_intakeEncoder.getPosition());
     }
-    public void setArmDistence(double distence) {
-        m_intakeEncoder.setPosition(distence);
+    public void setArmDistence() {
+        m_intakeEncoder.setPosition(5);
     }
+
+    public void armInit() {
+        m_intakeEncoder.setPosition(0);
+
+    }
+
+
+    // compressor functions
+    public void compressorDisable() {
+        m_compress.disable();
+    }
+
+    public void compressorEnable() {
+        m_compress.enableAnalog(0, 60);
+    }
+    
 
     // public double getIntakeEncoder() {
     //     return m_intakeEncoder.getPosition();// I have no idea if this works
@@ -81,4 +128,8 @@ public class Arm extends SubsystemBase
     //     m_intakeEncoder.setPosition(0.0);
 
     // }
+    @Override
+    public void periodic(){
+        SmartDashboard.putNumber("Intake Rotations", m_intakeEncoder.getPosition());
+    }
 }

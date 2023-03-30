@@ -50,12 +50,12 @@ public final class Constants
     public static final double kEncoderConversionFactor = 6 * Math.PI / 9.52;
 
     public static final double kHangMotorSpeed = 0.8;
+    public static final double kInitialArmValue = 0.0;
 
     public static final double kOffBalanceAngleThresholdDegrees = 4.5;
     public static final double kOnBalanceAngleThresholdDegrees = 4.5;
 
-  
-    public static final double kAutoBalanceMultiplier = 0.55;
+    public static final double kAutoBalanceMultiplier = 0.65;
     public static final double kAutoBalanceDerivativeMultiplier = 0.6;
 
   }

@@ -12,6 +12,8 @@ import com.kauailabs.navx.frc.AHRS;
 
 //Subsystem
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.Suction;
+import frc.robot.subsystems.Arm;
 import frc.robot.Constants.ArmConstants;
 //Constants
 import frc.robot.Constants.ChassisConstants;
@@ -22,15 +24,22 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class AutoBalance extends CommandBase {
     private final Chassis m_drive;
     private AHRS NavX2;
+    private Suction m_suction;
+    private Arm m_arm;
     private final double kInitialRollOffset;
     boolean autoBalanceXMode = false;
 
     private double previousSpeed = 0;
 
-    public AutoBalance(Chassis subsystem, AHRS Nav, double rollOffset){
+    public AutoBalance(Chassis subsystem, AHRS Nav, double rollOffset, Suction suction, Arm arm){
         this.m_drive = subsystem;
         this.NavX2 = Nav;
         this.kInitialRollOffset = rollOffset; 
+        this.m_suction = suction;
+        this.m_arm = arm;
+
+
+        
 
         addRequirements(m_drive);
     }
@@ -77,6 +86,11 @@ public class AutoBalance extends CommandBase {
             SmartDashboard.putNumber("AutoBalanceSpeed", xAxisSpeed);
 
             previousSpeed = pitchAngleRadians;
+
+            if (dSpeed == 0 && pitchAngleRadians == 0 && !m_suction.m_suction.get()) {
+                m_suction.suctionDeploy();
+                m_arm.compressorEnable();
+            }
         }
 
         //If the robot is balanced, it should tell the motors to stop moving.

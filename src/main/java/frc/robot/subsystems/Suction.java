@@ -6,7 +6,7 @@ import frc.robot.Constants.ArmConstants;
 
 public class Suction 
 {
-    final Solenoid m_suction = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,3);
+    final public Solenoid m_suction = new Solenoid(ArmConstants.kModuleID,PneumaticsModuleType.CTREPCM,3);
     public void suctionDeploy()
     {
         m_suction.toggle();

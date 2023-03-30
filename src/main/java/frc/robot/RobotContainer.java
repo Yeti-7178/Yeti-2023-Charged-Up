@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-
-
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -14,18 +11,14 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Chassis;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Auton.*;
 import frc.robot.Constants.ChassisConstants;
 import frc.robot.Constants.OIConstants;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import frc.robot.commands.Auton.AutoTest;
 import frc.robot.commands.drive.AutoBalance;
 import frc.robot.commands.drive.DefaultDrive;
 // import frc.robot.commands.Autos;
@@ -33,12 +26,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Arm;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.NavSubsystem;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import java.util.concurrent.TimeUnit;
 import frc.robot.subsystems.Suction;
+import frc.robot.subsystems.Time;
 // import frc.robot.subsystems.MainAutoBalance;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -52,6 +45,7 @@ public class RobotContainer {
   private final Chassis m_chassisSubsystem = new Chassis();
   public final Arm m_arm = new Arm();
   public final Suction m_suction = new Suction();
+  public final Time m_timer = new Time();
   private final NavSubsystem m_navSubsystem;
   SendableChooser<Command> m_autonChooser = new SendableChooser<>();
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -87,19 +81,21 @@ public class RobotContainer {
     m_chassisSubsystem.setDefaultCommand
     (
       new DefaultDrive(m_chassisSubsystem,
-      () -> -m_driverController.getLeftY()*.5,
-      () -> m_driverController.getRightX()*.5,
+      () -> -m_driverController.getLeftY()*.6,
+      () -> m_driverController.getRightX()*.6,
       () -> ChassisConstants.squareInputs)
     );
     m_arm.intakeDeploy();
 
 
+
+
     // add more to have more auton options
    // m_autonChooser.addOption("AutonTest",new AutoTest(m_chassisSubsystem,m_arm));
-    m_autonChooser.addOption("Place a cube, leave the community, go back on the platform and autobalance.",new Autogobackandplathform(m_chassisSubsystem,m_arm,ahrs));
+    m_autonChooser.addOption("Place a cube, leave the community, go back on the platform and autobalance.",new Autogobackandplathform(m_chassisSubsystem,m_arm,ahrs, m_suction));
     m_autonChooser.addOption("Auton place a cone/cube and platform",new AutonConePlatform(m_arm,m_chassisSubsystem));
     m_autonChooser.addOption("Auton place",new Autoplaceblance(m_chassisSubsystem));
-    m_autonChooser.addOption("Auton test",new AutoTest(m_chassisSubsystem, m_arm));
+
 
     Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2,1);
   
@@ -140,8 +136,18 @@ public class RobotContainer {
       new JoystickButton(m_driverController, Button.kLeftBumper.value)
       .whileTrue(
       new RepeatCommand(
-        new AutoBalance(m_chassisSubsystem, ahrs, kInitialYawOffset)
+        new AutoBalance(m_chassisSubsystem, ahrs, kInitialYawOffset, m_suction, m_arm)
       )
+      );
+
+      //delete before competition
+      new JoystickButton(m_driverController, Button.kB.value)
+      .onTrue(
+        new InstantCommand(m_arm::armMoveUp)
+      );
+      new JoystickButton(m_driverController, Button.kX.value)
+      .onTrue(
+        new InstantCommand(m_arm::armMoveDown)
       );
 
 
