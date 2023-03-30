@@ -14,16 +14,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ChassisConstants;
 
 public class Chassis extends SubsystemBase {
-    CANSparkMax m_frontLeft1 = new CANSparkMax(ChassisConstants.kLeftFrontPort1, MotorType.kBrushless);
-    CANSparkMax m_frontLeft2 = new CANSparkMax(ChassisConstants.kLeftFrontPort2, MotorType.kBrushless);
-    CANSparkMax m_rearLeft1 = new CANSparkMax(ChassisConstants.kLeftRearPort1, MotorType.kBrushless);
-    CANSparkMax m_rearLeft2 = new CANSparkMax(ChassisConstants.kLeftRearPort2, MotorType.kBrushless);
+    public CANSparkMax m_frontLeft1 = new CANSparkMax(ChassisConstants.kLeftFrontPort1, MotorType.kBrushless);
+    public CANSparkMax m_frontLeft2 = new CANSparkMax(ChassisConstants.kLeftFrontPort2, MotorType.kBrushless);
+    public CANSparkMax m_rearLeft1 = new CANSparkMax(ChassisConstants.kLeftRearPort1, MotorType.kBrushless);
+    public CANSparkMax m_rearLeft2 = new CANSparkMax(ChassisConstants.kLeftRearPort2, MotorType.kBrushless);
     MotorControllerGroup m_left = new MotorControllerGroup(m_frontLeft1,m_frontLeft2, m_rearLeft1,m_rearLeft2);
 
-    CANSparkMax m_frontRight1 = new CANSparkMax(ChassisConstants.kRightFrontPort1, MotorType.kBrushless);
-    CANSparkMax m_frontRight2 = new CANSparkMax(ChassisConstants.kRightFrontPort2, MotorType.kBrushless);
-    CANSparkMax m_rearRight1 = new CANSparkMax(ChassisConstants.kRightRearPort1, MotorType.kBrushless);
-    CANSparkMax m_rearRight2 = new CANSparkMax(ChassisConstants.kRightRearPort2, MotorType.kBrushless);
+    public CANSparkMax m_frontRight1 = new CANSparkMax(ChassisConstants.kRightFrontPort1, MotorType.kBrushless);
+    public CANSparkMax m_frontRight2 = new CANSparkMax(ChassisConstants.kRightFrontPort2, MotorType.kBrushless);
+    public CANSparkMax m_rearRight1 = new CANSparkMax(ChassisConstants.kRightRearPort1, MotorType.kBrushless);
+    public CANSparkMax m_rearRight2 = new CANSparkMax(ChassisConstants.kRightRearPort2, MotorType.kBrushless);
     MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight1,m_frontRight2, m_rearRight1,m_rearRight2);
 
 
@@ -79,6 +79,9 @@ public class Chassis extends SubsystemBase {
     private double getaverageEncoder(RelativeEncoder encode1, RelativeEncoder encode2){
         return (encode1.getPosition() + encode2.getPosition())/2;
     }
+    private double getaverageEncoderVelocity(RelativeEncoder encode1, RelativeEncoder encode2){
+        return (encode1.getVelocity() + encode2.getVelocity())/2;
+    }
 
     public double getAverageEncoderDistanceInches(){
         return ChassisConstants.kEncoderConversionFactor * ((getaverageEncoder(m_leftFrontEncoder1, m_leftFrontEncoder2)+getaverageEncoder(m_rightFrontEncoder1, m_rightFrontEncoder2))/2);
@@ -100,6 +103,20 @@ public class Chassis extends SubsystemBase {
     public double getLeftRearEncoder(){
         return getaverageEncoder(m_leftRearEncoder1, m_leftRearEncoder2);
     }
+
+    public double getLeftFrontEncoderVelocity(){
+        return getaverageEncoderVelocity(m_leftFrontEncoder1, m_leftFrontEncoder2);
+    }
+    public double getRightFrontEncoderVelocity(){
+        return getaverageEncoderVelocity(m_rightFrontEncoder1, m_rightFrontEncoder2);
+    }
+    public double getRightRearEncoderVelocity(){
+        return getaverageEncoderVelocity(m_rightRearEncoder1, m_rightRearEncoder2);
+    }
+    public double getLeftRearEncoderVelocity(){
+        return getaverageEncoderVelocity(m_leftRearEncoder1, m_leftRearEncoder2);
+    }
+
     public void setBrakeMode(){
         m_frontLeft1.setIdleMode(IdleMode.kBrake);
         m_frontLeft2.setIdleMode(IdleMode.kBrake);

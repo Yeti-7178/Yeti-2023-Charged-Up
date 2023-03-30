@@ -74,7 +74,21 @@ public class AutoBalance extends CommandBase {
             double dSpeed = Math.abs(pitchAngleRadians) - Math.abs(previousSpeed);
             double speedInput = (xAxisSpeed * ArmConstants.kAutoBalanceMultiplier) - (dSpeed * ArmConstants.kAutoBalanceDerivativeMultiplier);
 
-            if (Math.abs(rollAngleDegrees) < 10) { speedInput = 0; } 
+            /*double frontWheelsVelocity = (m_drive.getLeftFrontEncoderVelocity() + m_drive.getRightFrontEncoderVelocity())/2;
+            double backWheelsVelocity = (m_drive.getLeftRearEncoderVelocity() + m_drive.getRightRearEncoderVelocity())/2;
+
+            double frontSpeedInput = 0.6; //ArmConstants.kAutoBalanceMultiplier + (0.2 - frontWheelsVelocity) * 0.2;
+            double backSpeedInput = 0.6; //ArmConstants.kAutoBalanceMultiplier + (0.2 - backWheelsVelocity) * 0.2;
+            */
+            
+            
+            
+
+            //if (Math.abs(rollAngleDegrees) < 10) { speedInput = 0; } 
+            /*if (dSpeed <= 0) {
+
+            }*/
+
             
             //If we go too fast, the robot will go over the center of the pad and keep rocking back and forth.
             //If we go too slow, the robot will struggle to get over the charge pad since the ramp will make it slide downwards.
@@ -83,19 +97,35 @@ public class AutoBalance extends CommandBase {
             
             m_drive.drive(speedInput,0, false);
 
+            /*m_drive.m_frontLeft1.set(frontSpeedInput);
+            m_drive.m_frontLeft2.set(frontSpeedInput);
+            m_drive.m_frontRight1.set(frontSpeedInput);
+            m_drive.m_frontRight2.set(frontSpeedInput);
+            m_drive.m_rearLeft1.set(backSpeedInput);
+            m_drive.m_rearLeft2.set(backSpeedInput);
+            m_drive.m_rearRight1.set(backSpeedInput);
+            m_drive.m_rearRight2.set(backSpeedInput);
+            */
+
+
             SmartDashboard.putNumber("AutoBalanceSpeed", xAxisSpeed);
+            SmartDashboard.putNumber("Tilt (Raidans)", pitchAngleRadians);
+            SmartDashboard.putNumber("Autobalance dSpeed", dSpeed);
 
             previousSpeed = pitchAngleRadians;
 
-            if (dSpeed == 0 && pitchAngleRadians == 0 && !m_suction.m_suction.get()) {
+            /*if (Math.abs(pitchAngleRadians) < 0.05 && !m_suction.m_suction.get()) {
                 m_suction.suctionDeploy();
-                m_arm.compressorEnable();
-            }
+                //m_arm.compressorEnable();
+            }*/
         }
 
         //If the robot is balanced, it should tell the motors to stop moving.
         else{
             m_drive.drive(0,0, false);
+            /*if (!m_suction.m_suction.get()) {
+                m_suction.suctionDeploy();
+            }*/
         }
     }
 
@@ -104,4 +134,6 @@ public class AutoBalance extends CommandBase {
     public void end(boolean interrupted){
         m_drive.drive(0, 0, false);
     }
+
+
 }

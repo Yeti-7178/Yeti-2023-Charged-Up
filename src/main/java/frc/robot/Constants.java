@@ -55,8 +55,8 @@ public final class Constants
     public static final double kOffBalanceAngleThresholdDegrees = 4.5;
     public static final double kOnBalanceAngleThresholdDegrees = 4.5;
 
-    public static final double kAutoBalanceMultiplier = 0.65;
-    public static final double kAutoBalanceDerivativeMultiplier = 0.6;
+    public static final double kAutoBalanceMultiplier = 0.6;
+    public static final double kAutoBalanceDerivativeMultiplier = 0.9;
 
   }
 

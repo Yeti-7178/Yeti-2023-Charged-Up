@@ -141,14 +141,14 @@ public class RobotContainer {
       );
 
       //delete before competition
-      new JoystickButton(m_driverController, Button.kB.value)
+      /*new JoystickButton(m_driverController, Button.kB.value)
       .onTrue(
         new InstantCommand(m_arm::armMoveUp)
       );
       new JoystickButton(m_driverController, Button.kX.value)
       .onTrue(
         new InstantCommand(m_arm::armMoveDown)
-      );
+      );*/
 
 
       // co-driver DriverController buttons
